@@ -482,7 +482,7 @@ useEffect(() => {
 
       <footer>
         <button onClick={() => navigate('/dashboard/Title_Preparations')}>Back</button>
-        <button   onClick={handleSubmit}> Next ➡️</button>
+        <button   onClick={handleSubmit}> Nextjs ➡️</button>
       </footer>
     </div>
   );
