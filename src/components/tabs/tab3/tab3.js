@@ -242,7 +242,7 @@ if (
     console.log("Request Data:", JSON.stringify(jsonData, null, 2));
 
     try {
-      const response = await fetch('http://localhost:8080/api/tab3-data', {
+      const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab3-data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonData),

@@ -143,7 +143,7 @@ const Tab4 = () => {
         console.log("Request Data:", requestData);
 
         try {
-            const response = await fetch('http://localhost:8080/api/tab4-data', {
+            const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab4-data', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData),
