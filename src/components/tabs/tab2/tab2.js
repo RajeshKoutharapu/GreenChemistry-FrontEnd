@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../../Modal/Modal';
 import { useFormContext } from '../../../allContexts/context'; // Ensure this is the correct path
 
 import './tab2.css';
@@ -18,9 +17,7 @@ const Tab2 = () => {
   
   const [mainInstrumentData, setMainInstrumentData] = useState(formData.mainInstrumentData || []);
   const [mainInstrumentTables, setMainInstrumentTables] = useState(formData.mainInstrumentTables || {});
-  const [showModal, setShowModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-
+  
   const navigate = useNavigate();
 
   const instrumentTables = {
