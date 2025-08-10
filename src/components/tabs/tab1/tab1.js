@@ -272,7 +272,7 @@ useEffect(() => {
     title="Guide Information"
     content={
       <div>
-        <h5>None:</h5><p>NO filtration</p>
+        <h5>None:</h5><p>NO Filtration</p>
         <h5>Sedimentation:</h5><p>Let particles settle naturally and use clear solution.</p>
         <h5>Centrifuge:</h5><p>Use centrifuge to clarify.</p>
         <h5>Membrane filtration:</h5><p>Use membrane to filter particles.</p>
