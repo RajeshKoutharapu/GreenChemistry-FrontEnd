@@ -414,7 +414,7 @@ useEffect(() => {
       console.log("Request Data:", JSON.stringify(requestData, null, 2)); // Debugging step
 
       // API Request
-      const response = await fetch("http://localhost:8080/api/tab2-data", {
+      const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -482,7 +482,7 @@ useEffect(() => {
 
       <footer>
         <button onClick={() => navigate('/dashboard/Title_Preparations')}>Back</button>
-        <button   onClick={handleSubmit}> Nextjs ➡️</button>
+        <button   onClick={handleSubmit}> Next ➡️</button>
       </footer>
     </div>
   );
