@@ -1,59 +1,33 @@
 .tabs-navbar {
   display: flex;
-  justify-content: space-around;
-  background-color: #f0f2f5;
-  padding: 12px 10px;
-  border-bottom: 2px solid #dee2e6;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tabs-navbar button {
-  border: none;
-  padding: 12px 18px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  min-width: 180px;
+  width: 100%;
   text-align: center;
-  white-space: nowrap;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
 }
 
-/* Fixed colors for each tab */
-.tabs-navbar button:nth-child(1) {
-  background-color: #007bff; /* Blue */
+.tab-item {
+  flex: 1; /* Equal width */
+  padding: 14px 10px;
+  min-width: 150px; /* Prevent too small labels */
+  color: inherit;
 }
 
-.tabs-navbar button:nth-child(2) {
-  background-color: #28a745; /* Green */
-}
+/* Gradients for full background */
+.gradient1 { background: linear-gradient(135deg, #00f2fe,#4facfe); }
+.gradient2 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+.gradient3 { background: linear-gradient(135deg, #f7971e, #ffd200); color: #212529; }
+.gradient4 { background: linear-gradient(135deg, #c471f5, #fa71cd); }
+.gradient5 { background: linear-gradient(135deg, #ff6a00, #ee0979); }
 
-.tabs-navbar button:nth-child(3) {
-  background-color: #17a2b8; /* Teal */
-}
-
-.tabs-navbar button:nth-child(4) {
-  background-color: #ffc107; /* Yellow */
-  color: #212529;
-}
-
-.tabs-navbar button:nth-child(5) {
-  background-color: #6f42c1; /* Purple */
-}
-
-/* Active button (adds border and elevation) */
-.tabs-navbar button.active {
-  outline: 3px solid #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  transform: scale(1.05);
-}
-
-/* Hover effect */
-.tabs-navbar button:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
+/* Responsive: stack vertically on mobile */
+@media (max-width: 768px) {
+  .tab-item {
+    flex: 100%;
+    font-size: 14px;
+    padding: 12px 8px;
+  }
 }

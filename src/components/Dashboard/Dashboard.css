@@ -1,11 +1,23 @@
-.dashboard-container {
+form .form-group {
   display: flex;
-  flex-direction: column;
-  align-items: stretch; 
-  width: 100%; 
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* wrap neatly when screen is small */
 }
 
-.tab-content {
-  margin-top: 20px;
-  width: 90%; 
+form .form-group label {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+form .form-group select,
+form .form-group input,
+form .form-group textarea {
+  flex: 1;
+  min-width: 150px;
+}
+
+form .form-group button {
+  flex: 0 0 auto;
 }

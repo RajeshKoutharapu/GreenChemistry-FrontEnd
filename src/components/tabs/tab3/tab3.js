@@ -243,6 +243,7 @@ if (
 
     try {
       const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab3-data', {
+      //  const response = await fetch('http://localhost:8080/api/tab3-data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonData),
@@ -280,6 +281,8 @@ if (
           }}
         />
         <button className="btn btn-success" onClick={openGuide2}>Data For Information Only</button>
+        <button className="btn btn-secondary" onClick={openGuide1}>Guide for PhysicalHazard and SignalWord</button>
+
       </div>
 
       {numRows1 > 0 && (
@@ -319,7 +322,6 @@ if (
 
       <footer>
         <button onClick={() => navigate('/dashboard/IntstrumentsExperiments')}>Back</button>
-        <button className="btn btn-secondary" onClick={openGuide1}>Guide for PhysicalHazard and SignalWord</button>
         <button onClick={handleSubmit}> Next ➡️</button>
       </footer>
 

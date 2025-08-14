@@ -179,6 +179,7 @@ useEffect(() => {
     try {
       console.log("JSON Data to be sent:", JSON.stringify(requestData, null, 2));
       await axios.post("https://greenchemistry-backendend.onrender.com/api/tab1-data", requestData);
+      // await axios.post("http://localhost:8080/api/tab1-data", requestData);
     } catch (error) {
       console.error("Error submitting data:", error);
     }
@@ -186,11 +187,13 @@ useEffect(() => {
     navigate("/dashboard/IntstrumentsExperiments");
   }; 
 
-  return (<div className="container mt-5 tab1-container">
+  return (<div className="container mt-5 tab1-container tab1-highlight">
   <div className="card shadow-sm border-0 mb-4">
     <div className="card-body">
-      <h3 className="mb-4 fw-bold text-primary">🧪 Title & Preparations</h3>
-
+      <h3 className="mb-4 fw-bold text-primary" style={{ display: "inline-block", marginRight: "10px" }}>🧪 Title & Preparations</h3>
+      <button className="btn btn-outline-secondary rounded-pill" onClick={openGuide}>
+    📘 Filtration Guide
+  </button>
       <div className="mb-3">
         <label className="form-label fw-semibold">Name/Title</label>
         <input
@@ -254,13 +257,11 @@ useEffect(() => {
       )}
 
       {/* Footer Actions */}
-      <div className="d-flex justify-content-between mt-4">
-        <button className="btn btn-outline-secondary rounded-pill" onClick={openGuide}>
-          📘 Filtration Guide
-        </button>
-        <button className="btn btn-primary rounded-pill px-4" onClick={handleSubmit}>
-          Next ➡️
-        </button>
+      <div className="d-flex justify-content-end mt-4">
+       
+       <button className="btn btn-primary rounded-pill px-4" onClick={handleSubmit}>
+    Next ➡️
+  </button>
       </div>
     </div>
   </div>

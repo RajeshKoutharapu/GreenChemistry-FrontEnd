@@ -6,6 +6,7 @@ import { Chart, ArcElement, CategoryScale, LinearScale, BarElement } from 'chart
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useFormContext } from '../../../allContexts/context';
+import { useNavigate } from 'react-router-dom';
 
 Chart.register(ArcElement, CategoryScale, LinearScale, BarElement);
 
@@ -16,6 +17,7 @@ const Tab5 = () => {
 
     const passedData = React.useMemo(() => location.state?.data || {}, [location.state?.data]);
    const { formData } = useFormContext();  // This gives you access to title
+const navigate = useNavigate();
 
     const [reportData, setReportData] = useState({
         numberAnalytesStudied: '',
@@ -255,12 +257,15 @@ const barValuePlugin = {
   </p>
 )}      
 
-
+<footer>
+ <button onClick={() => navigate('/dashboard/General')}>Back</button>
 {showPrintButton && (
   <button className="btn btn-secondary" onClick={downloadPDF}>
     Print
   </button>
 )}
+</footer>
+
         </div>
     );
  

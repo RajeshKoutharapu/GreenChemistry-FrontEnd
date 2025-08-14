@@ -55,6 +55,56 @@
     padding: 10px 20px;
     cursor: pointer;
   }
+/* make the main white card taller and box-sized correctly */
+.tab-inner {
+  width: 100%;
+  max-width: 1400px;
+  padding: 28px;              /* a bit larger padding for breathing room */
+  background-color: rgba(255,255,255,0.96);
+  border-radius: 12px;
+  box-sizing: border-box;     /* critical so padding doesn't break sizing */
+  min-height: 70vh;           /* white card will cover most of viewport */
+  margin-bottom: 40px;        /* space below card before page end */
+}
+
+/* ensure dashboard background always fills screen */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* robust form layout (label | input | guide button) */
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;            /* wraps nicely on small screens */
+}
+
+/* keep labels a fixed column so inputs don't shrink */
+.form-group label {
+  flex: 0 0 220px;            /* adjust 180–260px to taste */
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* inputs/selects grow to fill remaining space */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  flex: 1 1 360px;
+  min-width: 180px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* guide buttons stay compact on the right */
+.form-group .btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
 
 
 

@@ -11,9 +11,12 @@ const Tab2 = () => {
   
   const [generalInstrumentRows, setGeneralInstrumentRows] = useState(formData.generalInstrumentRows || 0);
   const [mainInstrumentsCount, setMainInstrumentsCount] = useState(formData.mainInstrumentsCount || 0);
-  const [generalInstrumentData, setGeneralInstrumentData] = useState(formData.generalInstrumentData || [
-    { instrument: '', time: '' },
-  ]);
+  const [generalInstrumentData, setGeneralInstrumentData] = useState(
+  formData.generalInstrumentData || [
+    { instrument: '', time: '', energy_kwh: '' },
+  ]
+);
+
   
   const [mainInstrumentData, setMainInstrumentData] = useState(formData.mainInstrumentData || []);
   const [mainInstrumentTables, setMainInstrumentTables] = useState(formData.mainInstrumentTables || {});
@@ -49,12 +52,16 @@ const Tab2 = () => {
     'UPLC': 'UPLC',
     'XRD Diffractometer': 'OtherInstruments',
     'XRF-Spectrometer': 'OtherInstruments',
+    'Other Instrument': 'OtherInstrumentCustom',
   };
 
-  useEffect(() => {
+useEffect(() => {
   setGeneralInstrumentData(prev =>
     prev.slice(0, generalInstrumentRows).concat(
-      Array.from({ length: Math.max(0, generalInstrumentRows - prev.length) }, () => ({ instrument: '', time: '' }))
+      Array.from(
+        { length: Math.max(0, generalInstrumentRows - prev.length) },
+        () => ({ instrument: '', time: '', energy_kwh: '' })
+      )
     )
   );
 }, [generalInstrumentRows]);
@@ -122,14 +129,15 @@ useEffect(() => {
   };
 
   const generateGeneralInstrumentTable = (numRows) => {
-    return Array.from({ length: numRows }, (_, i) => (
-      <tr key={i}>
-        <td>
-          <select
-            className="form-select"
-            value={generalInstrumentData[i]?.instrument || ''} // Set value from state
-            onChange={(e) => handleGeneralInstrumentChange(i, 'instrument', e.target.value)}
-          >
+  return Array.from({ length: numRows }, (_, i) => (
+    <tr key={i}>
+      {/* Instrument Dropdown */}
+      <td>
+        <select
+          className="form-select"
+          value={generalInstrumentData[i]?.instrument || ''}
+          onChange={(e) => handleGeneralInstrumentChange(i, 'instrument', e.target.value)}
+        >
           <option value="">select option</option>
             <option value="(-)40°C freezer">(-)40°C freezer</option>
             <option value="Amino Acid Analyzer">Amino Acid Analyzer</option>
@@ -190,20 +198,35 @@ useEffect(() => {
             <option value="Vortex mixer">Vortex mixer</option>
             <option value="Water bath">Water bath</option>
             <option value="Water Bath Shakers">Water Bath Shakers</option>
+            <option value="Other Instrument">Other Instrument</option>
+
           </select>
         </td>
+        <td>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="Enter time in mins"
+          value={generalInstrumentData[i]?.time || ''}
+          onChange={(e) => handleGeneralInstrumentChange(i, 'time', e.target.value)}
+        />
+      </td>
+
+      {/* Energy in kWh input only if "Other Instrument" */}
+      {generalInstrumentData[i]?.instrument === 'Other Instrument' && (
         <td>
           <input
             type="number"
             className="form-control"
-            placeholder="Enter time in mins"
-            value={generalInstrumentData[i]?.time || ''} // Set value from state
-            onChange={(e) => handleGeneralInstrumentChange(i, 'time', e.target.value)}
+            placeholder="Energy in kWh"
+            value={generalInstrumentData[i]?.energy_kwh || ''}
+            onChange={(e) => handleGeneralInstrumentChange(i, 'energy_kwh', e.target.value)}
           />
         </td>
-      </tr>
-    ));
-  };
+      )}
+    </tr>
+  ));
+};
 
   const generateMainInstrumentDropdowns = (numDropdowns) => {
     return Array.from({ length: numDropdowns }, (_, i) => (
@@ -222,7 +245,7 @@ useEffect(() => {
         </select>
         {mainInstrumentData[i] && instrumentTables[mainInstrumentData[i]] && (
           <div className="table-section mt-3">
-            <h5>{instrumentTables[mainInstrumentData[i]]} Table</h5>
+<h5>{mainInstrumentData[i]} Table</h5>
             {renderInstrumentTable(i, instrumentTables[mainInstrumentData[i]])}
           </div>
         )}
@@ -304,20 +327,31 @@ useEffect(() => {
         { label: 'Time for of study (mins)', field: 'Time for of study' },
         { label: 'Number of samles studied', field: 'Number of samles studied' },
       ],
+      OtherInstrumentCustom: [
+  { label: 'Time for of study', field: 'time_for_study' },
+  { label: 'Number of samples studied', field: 'num_samples_studied' },
+  { label: 'Energy consumed in kWh', field: 'energy_kwh' },
+],
+
     };
 
     if (!tableStructure[tableName]) {
       return <p>No configuration available for {tableName}.</p>;
     }
+ let firstColHeading = `${tableName} Parameters`;
+if (tableName === 'OtherInstrumentCustom') {
+  firstColHeading = 'Other instruments';
+}
 
     return (
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>{tableName} Parameters</th>
+            <th>{firstColHeading}</th>
             <th>Operating conditions</th>
           </tr>
         </thead>
+
         <tbody>
           {tableStructure[tableName].map((row) => (
             <tr key={row.field}>
@@ -347,72 +381,72 @@ useEffect(() => {
         return;
       }
 
-      // Validate General Instruments Data
-      if (generalInstrumentRows > 0) {
-        const isGeneralInstrumentDataValid = generalInstrumentData.every(
-          (row) => row.instrument && row.time
-        );
-        if (!isGeneralInstrumentDataValid) {
-          alert("Please fill out all fields for general instruments.");
-          return;
-        }
-      }
+   // Validate General Instruments Data
+if (generalInstrumentRows > 0) {
+  const isGeneralInstrumentDataValid = generalInstrumentData.every((row) => {
+    if (!row.instrument || !row.time) return false;
+    if (row.instrument === 'Other Instrument' && !row.energy_kwh) return false;
+    return true;
+  });
 
-      // Validate Main Instruments
-      if (mainInstrumentsCount > 0) {
-        // Ensure all main instrument dropdowns have a selected value
-        if (!mainInstrumentData.every((instrument) => instrument)) {
-          alert("Please select a main instrument for all dropdowns.");
-          return;
-        }
+  if (!isGeneralInstrumentDataValid) {
+    alert("Please fill out all fields for general instruments, including energy if 'Other Instrument'.");
+    return;
+  }
+}
 
-        // Validate each main instrument's table fields
-        const isMainInstrumentTablesValid = mainInstrumentData.every((instrument, index) => {
-          const tableData = mainInstrumentTables[index] || {}; // Ensure it's an object
+// Validate Main Instruments
+if (mainInstrumentsCount > 0) {
+  if (!mainInstrumentData.every((instrument) => instrument)) {
+    alert("Please select a main instrument for all dropdowns.");
+    return;
+  }
 
-          // Define the required fields for each instrument type
-          const tableStructure = {
-            HPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
-            LC_MS: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
-            NMR: ["scan_time", "num_scans"],
-            GC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
-            IR: ["scan_time", "num_scans"],
-            UV: ["scan_time", "num_scans"],
-            UPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
-            UHPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
-            GC_MS: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
-            FT_IR: ["scan_time", "num_scans"],
-            Dissolution: ["Media Volume used for 6 bowls", "Time in mins"],
-            OtherInstruments: ["Time for of study", "Number of samles studied"],
-          };
+  const tableStructure = {
+    HPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+    LC_MS: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+    NMR: ["scan_time", "num_scans"],
+    GC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+    IR: ["scan_time", "num_scans"],
+    UV: ["scan_time", "num_scans"],
+    UPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+    UHPLC: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+    GC_MS: ["column_length", "column_temp", "sample_temp", "flow_rate", "run_time", "num_injections"],
+    FT_IR: ["scan_time", "num_scans"],
+    Dissolution: ["Media Volume used for 6 bowls", "Time in mins"],
+    OtherInstruments: ["Time for of study (mins)", "Number of samples studied"],
+    OtherInstrumentCustom: ["time_for_study", "num_samples_studied", "energy_kwh"],
+  };
 
-          // Retrieve required fields for the selected instrument
-          const requiredFields = tableStructure[instrument] || [];
+  const isMainInstrumentTablesValid = mainInstrumentData.every((instrument, index) => {
+    const tableData = mainInstrumentTables[index] || {};
+    const requiredFields = tableStructure[instrument] || [];
+    return requiredFields.every((field) => String(tableData[field] || "").trim());
+  });
 
-          // Ensure all required fields have a non-empty value
-          return requiredFields.every((field) => tableData[field]?.trim());
-        });
+  if (!isMainInstrumentTablesValid) {
+    alert("Please fill out all required fields in the main instrument tables.");
+    return;
+  }
+}
 
-        if (!isMainInstrumentTablesValid) {
-          alert("Please fill out all required fields in the main instrument tables.");
-          return;
-        }
-      }
 
       // Prepare request data
       const requestData = {
         generalInstruments: generalInstrumentData, // General instruments data
         mainInstruments: mainInstrumentData.map((instrument, index) => ({
-          instrument,
-          data: mainInstrumentTables[index] || {},
-        })),
+  instrument,
+  data: mainInstrumentTables[index] || {},
+})),
+
       };
 
       console.log("Request Data:", JSON.stringify(requestData, null, 2)); // Debugging step
 
       // API Request
-      const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
-        method: "POST",
+       const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
+      //  const response = await fetch("http://localhost:8080/api/tab2-data", {
+         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -432,7 +466,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="container mt-4 ">
+    <div className="container mt-4 tab-inner">
       <h3 className='text-primary'>🧪 Instruments/Equipments</h3>
 
       <div className="mb-3">
@@ -451,6 +485,9 @@ useEffect(() => {
           <tr>
             <th>General Instruments</th>
             <th>Used Time in minutes</th>
+            {generalInstrumentData.some(row => row.instrument === 'Other Instrument') && (
+              <th>Energy in kWh</th>
+            )}
           </tr>
         </thead>
         <tbody>{generateGeneralInstrumentTable(generalInstrumentRows)}</tbody>

@@ -4,7 +4,7 @@ import bgImage from '../../backgroundImages/homepageimage.jpeg';
 
 const LandingPage = () => {
     const goToDashboard = () => {
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard/Title_Preparations";
     };
 
     return (

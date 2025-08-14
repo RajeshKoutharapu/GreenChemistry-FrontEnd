@@ -1,6 +1,4 @@
 import { useLocation } from 'react-router-dom';
-
-
 import Tab1 from '../tabs/tab1/tab1';
 import Tab2 from '../tabs/tab2/tab2';
 import Tab3 from '../tabs/tab3/tab3';
@@ -11,11 +9,25 @@ import TabsNavbar from '../TabsNavbar/TabsNavbar';
 
 const Dashboard = () => {
   const location = useLocation();
-  const currentTab = location.pathname.split('/').pop() || 'tab1';
+  const currentTab = location.pathname.split('/').pop();
 
-  //const { formData, setFormData } = useFormContext();  // ✅ Use Form Context
-  //console.log("Dashboard formData:", formData); // Debugging log
-     
+  const getBackgroundClass = () => {
+    switch (currentTab) {
+      case 'Title_Preparations':
+        return 'gradient1';
+      case 'IntstrumentsExperiments':
+        return 'gradient2';
+      case 'Chemicals_Reagents_Solvents_Gas':
+        return 'gradient3';
+      case 'General':
+        return 'gradient4';
+      case 'FinalReport':
+        return 'gradient5';
+      default:
+        return 'gradient1';
+    }
+  };
+
   const renderTabContent = () => {
     switch (currentTab) {
       case 'Title_Preparations':
@@ -34,13 +46,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
-      {/* Tabs Navbar */}
+    <div className={`dashboard-container ${getBackgroundClass()}`}>
       <TabsNavbar />
-
-      {/* Tab content */}
       <div className="tab-content">
-        {renderTabContent()}
+        <div className="tab-inner">
+          {renderTabContent()}
+        </div>
       </div>
     </div>
   );

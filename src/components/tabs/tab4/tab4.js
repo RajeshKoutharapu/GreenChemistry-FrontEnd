@@ -28,6 +28,19 @@ const Tab4 = () => {
         guide7: "This is information for Guide 7. Add relevant details here.",
         guide00: "This is general guide information for Guide 00."
     };
+   const [showWasteInfo, setShowWasteInfo] = useState(false);
+
+useEffect(() => {
+    // Show only if BOTH fields are selected and NOT "No-treatment"
+    const hasSelections =
+        wasteManagementSamples !== "" && wasteManagementOthers !== "";
+
+    const bothNoTreatment =
+        wasteManagementSamples === "No-treatment" &&
+        wasteManagementOthers === "No-treatment";
+
+    setShowWasteInfo(hasSelections && !bothNoTreatment);
+}, [wasteManagementSamples, wasteManagementOthers]);
 
     // Update context whenever the component mounts or state changes
     useEffect(() => {
@@ -143,7 +156,8 @@ const Tab4 = () => {
         console.log("Request Data:", requestData);
 
         try {
-            const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab4-data', {
+         const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab4-data', {
+        //    const response = await fetch('http://localhost:8080/api/tab4-data', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData),
@@ -159,7 +173,7 @@ const Tab4 = () => {
     };
 
     return (
-        <div className="tab-content">
+        <div className="tab-content tab-panel">
             <h2 className='text-primary'>General</h2>
             <div className="form-group">
                 <label htmlFor="numAnalytes">Number of Analytes Studied:</label>
@@ -236,16 +250,18 @@ const Tab4 = () => {
                 <button className="btn btn-secondary" onClick={() => openGuide('guide7')}>Waste Management of Others Guide</button>
             </div>
 
-            <div className="form-group" id="waste-info-section">
-                <label htmlFor="wasteInfo">Waste Management Information (if yes):</label>
-                <textarea
-                    id="wasteInfo"
-                    rows="4"
-                    placeholder="Enter the information"
-                    value={wasteInfo}
-                    onChange={(e) => setWasteInfo(e.target.value)}
-                ></textarea>
-            </div>
+            {showWasteInfo && (
+        <div className="form-group" id="waste-info-section">
+            <label htmlFor="wasteInfo">Waste Management Information (if yes):</label>
+            <textarea
+                id="wasteInfo"
+                rows="4"
+                placeholder="Enter the information"
+                value={wasteInfo}
+                onChange={(e) => setWasteInfo(e.target.value)}
+            ></textarea>
+        </div>
+    )}
 
             {/* Navigation Footer */}
             <footer>
