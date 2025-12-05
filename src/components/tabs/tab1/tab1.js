@@ -13,6 +13,7 @@ const Tab1 = () => {
   const standardsTableRef = useRef(null);
   const resolutionsTableRef = useRef(null);
   const samplesTableRef = useRef(null);
+const [loading, setLoading] = useState(false);
 
   // Initialize state from context
 useEffect(() => {
@@ -146,48 +147,53 @@ useEffect(() => {
     });
   };
 
-  const handleSubmit = async () => {
-    if (!formData.title) {
-      alert("Please enter a title.");
-      return;
-    }
-          
-    const standardsData = extractTableData(standardsTableRef);
-    const resolutionsData = extractTableData(resolutionsTableRef);
-    const samplesData = extractTableData(samplesTableRef);
+ const handleSubmit = async () => {
+  if (!formData.title) {
+    alert("Please enter a title.");
+    return;
+  }
 
-    if ([...standardsData, ...resolutionsData, ...samplesData].some((row) => !row.weight || !row.volume || !row.filtration)) {
-      alert("Please fill out all required fields in the table.");
-      return;
-    }
+  const standardsData = extractTableData(standardsTableRef);
+  const resolutionsData = extractTableData(resolutionsTableRef);
+  const samplesData = extractTableData(samplesTableRef);
 
-    // Update formData with the extracted data
-    setFormData((prev) => ({
-      ...prev,
-      standardsData,
-      resolutionsData,
-      samplesData,
-    }));
+  if ([...standardsData, ...resolutionsData, ...samplesData].some((row) => !row.weight || !row.volume || !row.filtration)) {
+    alert("Please fill out all required fields in the table.");
+    return;
+  }
 
-    const requestData = {
-      title: formData.title,
-      standards: standardsData,
-      resolutions: resolutionsData,
-      samples: samplesData,
-    };
+  setLoading(true); // ⭐ START LOADING
 
-    try {
-      console.log("JSON Data to be sent:", JSON.stringify(requestData, null, 2));
-      await axios.post("https://greenchemistry-backendend.onrender.com/api/tab1-data", requestData);
-      // await axios.post("http://localhost:8080/api/tab1-data", requestData);
-    } catch (error) {
-      console.error("Error submitting data:", error);
-    }
+  setFormData((prev) => ({
+    ...prev,
+    standardsData,
+    resolutionsData,
+    samplesData,
+  }));
+
+  const requestData = {
+    title: formData.title,
+    standards: standardsData,
+    resolutions: resolutionsData,
+    samples: samplesData,
+  };
+
+  try {
+    console.log("JSON Data to be sent:", JSON.stringify(requestData, null, 2));
+    await axios.post("https://greenchemistry-backendend.onrender.com/api/tab1-data", requestData);
 
     navigate("/dashboard/IntstrumentsExperiments");
-  }; 
+  } catch (error) {
+    console.error("Error submitting data:", error);
+    setLoading(false); // ⭐ STOP LOADING IF ERROR
+  }
+};
 
-  return (<div className="container mt-5 tab1-container tab1-highlight">
+
+
+  return (
+
+  <div className="container mt-5 tab1-container tab1-highlight">
   <div className="card shadow-sm border-0 mb-4">
     <div className="card-body">
       <h3 className="mb-4 fw-bold text-primary" style={{ display: "inline-block", marginRight: "10px" }}>🧪 Title & Preparations</h3>
@@ -258,11 +264,20 @@ useEffect(() => {
 
       {/* Footer Actions */}
       <div className="d-flex justify-content-end mt-4">
-       
-       <button className="btn btn-primary rounded-pill px-4" onClick={handleSubmit}>
-    Next ➡️
-  </button>
-      </div>
+
+  {loading ? (
+    <button className="btn btn-secondary rounded-pill px-4" disabled>
+      <span className="spinner-border spinner-border-sm me-2"></span>
+      Processing...
+    </button>
+  ) : (
+    <button className="btn btn-primary rounded-pill px-4" onClick={handleSubmit}>
+      Next ➡️
+    </button>
+  )}
+
+</div>
+
     </div>
   </div>
 
@@ -282,7 +297,6 @@ useEffect(() => {
     }
   />
 </div>
-
   );
 };
 
