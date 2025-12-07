@@ -263,8 +263,7 @@ useEffect(() => {
       )}
 
       {/* Footer Actions */}
-      <div className="d-flex justify-content-end mt-4">
-
+     <div className="d-flex justify-content-end mt-4">
   {loading ? (
     <button className="btn btn-secondary rounded-pill px-4" disabled>
       <span className="spinner-border spinner-border-sm me-2"></span>
@@ -275,9 +274,13 @@ useEffect(() => {
       Next ➡️
     </button>
   )}
-
 </div>
 
+{loading && (
+  <p className="mt-2" style={{ fontStyle: "italic", color: "#d97706" }}>
+    ⏳ Please wait… it may take a little longer for the first time.
+  </p>
+)}
     </div>
   </div>
 
