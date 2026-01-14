@@ -32,7 +32,7 @@ const Tab2 = () => {
     'GC': 'GC',
     'GC-MS': 'GC_MS',
     'HPLC': 'HPLC',
-    'HPLC-Prep': 'OtherInstruments',
+    'HPLC-Prep': 'HPLC',
     'ICP-MS': 'OtherInstruments',
     'ICP-OES': 'OtherInstruments',
     'LC-MS': 'LC_MS',
@@ -43,10 +43,10 @@ const Tab2 = () => {
     'Raman Spectrometer': 'OtherInstruments',
     'SFC': 'OtherInstruments',
     'SFC-Prep': 'OtherInstruments',
-    'Single Quadrupole GC-MS': 'OtherInstruments',
+    'Single Quadrupole GC-MS': 'GC_MS',
     'TOC Analyzer': 'OtherInstruments',
-    'Triple Quadrupole GC/MS': 'OtherInstruments',
-    'Triple Quadrupole LC/MS system': 'OtherInstruments',
+    'Triple Quadrupole GC/MS': 'GC_MS',
+    'Triple Quadrupole LC/MS system': 'LC_MS',
     'UV-Vis Spectrophotometer': 'UV',
     'UHPLC': 'UHPLC',
     'UPLC': 'UPLC',
@@ -276,8 +276,8 @@ useEffect(() => {
         { label: 'Number of scans', field: 'num_scans' },
       ],
       GC: [
-        { label: 'Column length in mm', field: 'column_length' },
-        { label: 'Column oven temperature °C', field: 'column_temp' },
+        { label: 'Column length in meters', field: 'column_length' },
+        { label: 'Column oven temperature °C(write maximum temperature)', field: 'column_temp' },
         { label: 'Sample oven temperature °C', field: 'sample_temp' },
         { label: 'Carrier gas Flow rate (mL/min)', field: 'flow_rate' },
         { label: 'Run time (mins)', field: 'run_time' },
@@ -308,7 +308,7 @@ useEffect(() => {
         { label: 'Number of injections', field: 'num_injections' },
       ],
       GC_MS: [
-        { label: 'Column length in mm', field: 'column_length' },
+        { label: 'Column length in meters', field: 'column_length' },
         { label: 'Column oven temperature °C', field: 'column_temp' },
         { label: 'Sample oven temperature °C', field: 'sample_temp' },
         { label: 'Carrier gas Flow rate (mL/min)', field: 'flow_rate' },
@@ -444,8 +444,8 @@ if (mainInstrumentsCount > 0) {
       console.log("Request Data:", JSON.stringify(requestData, null, 2)); // Debugging step
 
       // API Request
-       const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
-      //  const response = await fetch("http://localhost:8080/api/tab2-data", {
+       //const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
+        const response = await fetch("http://localhost:8080/api/tab2-data", {
          method: "POST",
         headers: {
           "Content-Type": "application/json",
