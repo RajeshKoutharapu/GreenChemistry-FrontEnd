@@ -22,13 +22,13 @@ const Tab5 = () => {
    const { formData } = useFormContext();  // This gives you access to title
 const navigate = useNavigate();
 
-const tab2RequestData = {
-  generalInstruments: formData.generalInstrumentData || [],
-  mainInstruments: (formData.mainInstrumentData || []).map((instrument, index) => ({
-    instrument,
-    data: formData.mainInstrumentTables?.[index] || {},
-  })),
-};
+// const tab2RequestData = {
+//   generalInstruments: formData.generalInstrumentData || [],
+//   mainInstruments: (formData.mainInstrumentData || []).map((instrument, index) => ({
+//     instrument,
+//     data: formData.mainInstrumentTables?.[index] || {},
+//   })),
+// };
 
     const [reportData, setReportData] = useState({
         numberAnalytesStudied: '',
