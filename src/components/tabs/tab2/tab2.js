@@ -444,8 +444,8 @@ if (mainInstrumentsCount > 0) {
       console.log("Request Data:", JSON.stringify(requestData, null, 2)); // Debugging step
 
       // API Request
-       //const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
-        const response = await fetch("http://localhost:8080/api/tab2-data", {
+       const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
+       // const response = await fetch("http://localhost:8080/api/tab2-data", {
          method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -507,7 +507,7 @@ if (mainInstrumentsCount > 0) {
       {generateMainInstrumentDropdowns(mainInstrumentsCount)}
 
   <div className="alert alert-info" role="alert">
-    <strong>Note:</strong> Note: Except carrier gas flow rate, rest of the gasses flow rate and information mentioned in Chemicals/Reagents/Gases Section.
+    <strong>Note:</strong> Except carrier gas flow rate, rest of the gasses flow rate and information mentioned in Chemicals/Reagents/Gases Section.
 
   </div>
 

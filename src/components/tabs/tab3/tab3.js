@@ -213,14 +213,45 @@ if (
       return true;
     };
 
-    return (
-      validateTable(nfpaHealthData1, 'Chemicals', 'NFPA Health', ['Name', 'NFPA Health Value', 'in %']) &&
-      validateTable(nfpaFlammabilityData1, 'Chemicals', 'NFPA Flammability', ['Name', 'NFPA Flammability Value', 'in %']) &&
-      validateTable(physicalHazardData1, 'Chemicals', 'Physical Hazard', ['Name', 'Physical Hazard', 'Signal Word']) &&
-      validateTable(nfpaHealthData2, 'Gases', 'NFPA Health', ['Name', 'NFPA Health Value', 'ml/min']) &&
-      validateTable(nfpaFlammabilityData2, 'Gases', 'NFPA Flammability', ['Name', 'NFPA Flammability Value', 'ml/min']) &&
-      validateTable(physicalHazardData2, 'Gases', 'Physical Hazard', ['Name', 'Physical Hazard', 'Signal Word'])
-    );
+   return (
+  validateTable(
+    nfpaHealthData1,
+    'Chemicals',
+    'NFPA Health',
+    ['Name', 'NFPA Health Value', 'in %']
+  ) &&
+  validateTable(
+    nfpaFlammabilityData1,
+    'Chemicals',
+    'NFPA Flammability',
+    ['Name', 'NFPA Flammability Value', 'in %']
+  ) &&
+  validateTable(
+    physicalHazardData1,
+    'Chemicals',
+    'Physical Hazard',
+    ['Name', 'Physical Hazard', 'Signal Word']
+  ) &&
+  validateTable(
+    nfpaHealthData2,
+    'Gases',
+    'NFPA Health',
+    ['Name', 'NFPA Health Value', 'ml/min']
+  ) &&
+  validateTable(
+    nfpaFlammabilityData2,
+    'Gases',
+    'NFPA Flammability',
+    ['Name', 'NFPA Flammability Value', 'ml/min']
+  ) &&
+  validateTable(
+    physicalHazardData2,
+    'Gases',
+    'Physical Hazard',
+    ['Name', 'Physical Hazard', 'Signal Word']
+  )
+);
+
   };
 
   const handleSubmit = async () => {
@@ -242,8 +273,8 @@ if (
     console.log("Request Data:", JSON.stringify(jsonData, null, 2));
 
     try {
-     // const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab3-data', {
-        const response = await fetch('http://localhost:8080/api/tab3-data', {
+      const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab3-data', {
+       // const response = await fetch('http://localhost:8080/api/tab3-data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonData),
@@ -287,9 +318,9 @@ if (
 
       {numRows1 > 0 && (
         <div className="table-section">
-          {createTable('NFPA Health', ['Name', 'NFPA Health Value', 'Purity in %'], ['input', 'dropdown', 'number'], numRows1, nfpaHealthData1, setNfpaHealthData1, 'chemicals', ['0', '1', '2', '3', '4'])}
-          {createTable('NFPA Flammability', ['Name', 'NFPA Flammability Value', 'Purity in %'], ['input', 'dropdown', 'number'], numRows1, nfpaFlammabilityData1, setNfpaFlammabilityData1, 'chemicals', ['0', '1', '2', '3', '4'])}
-          {createTable('Physical Hazard', ['Name', 'Physical Hazard', 'Signal Word'], ['input', 'dropdown', 'dropdown'], numRows1, physicalHazardData1, setPhysicalHazardData1, 'chemicals', ['N/A', 'W', 'OX', 'SA'], ['not mentioned', 'Caution', 'warning', 'Danger'])}
+          {createTable(null, ['Name', 'NFPA Health Value', 'Purity in %'], ['input', 'dropdown', 'number'], numRows1, nfpaHealthData1, setNfpaHealthData1, 'chemicals', ['0', '1', '2', '3', '4'])}
+          {createTable(null, ['Name', 'NFPA Flammability Value', 'Purity in %'], ['input', 'dropdown', 'number'], numRows1, nfpaFlammabilityData1, setNfpaFlammabilityData1, 'chemicals', ['0', '1', '2', '3', '4'])}
+          {createTable(null, ['Name', 'Physical Hazard', 'Signal Word'], ['input', 'dropdown', 'dropdown'], numRows1, physicalHazardData1, setPhysicalHazardData1, 'chemicals', ['N/A', 'W', 'OX', 'SA'], ['not mentioned', 'Caution', 'warning', 'Danger'])}
         </div>
       )}
 
@@ -314,9 +345,9 @@ if (
 
       {numRows2 > 0 && (
         <div className="table-section">
-          {createTable('NFPA Health', ['Name', 'NFPA Health Value', 'Flow mL/min'], ['input', 'dropdown', 'number'], numRows2, nfpaHealthData2, setNfpaHealthData2, 'gases', ['0', '1', '2', '3', '4'])}
-          {createTable('NFPA Flammability', ['Name', 'NFPA Flammability Value', 'Flow mL/min'], ['input', 'dropdown', 'number'], numRows2, nfpaFlammabilityData2, setNfpaFlammabilityData2, 'gases', ['0', '1', '2', '3', '4'])}
-          {createTable('Physical Hazard', ['Name', 'Physical Hazard', 'Signal Word'], ['input', 'dropdown', 'dropdown'], numRows2, physicalHazardData2, setPhysicalHazardData2, 'gases', ['N/A', 'W', 'OX', 'SA'], ['not mentioned', 'Caution', 'warning', 'Danger'])}
+          {createTable(null, ['Name', 'NFPA Health Value', 'Flow mL/min'], ['input', 'dropdown', 'number'], numRows2, nfpaHealthData2, setNfpaHealthData2, 'gases', ['0', '1', '2', '3', '4'])}
+          {createTable(null, ['Name', 'NFPA Flammability Value', 'Flow mL/min'], ['input', 'dropdown', 'number'], numRows2, nfpaFlammabilityData2, setNfpaFlammabilityData2, 'gases', ['0', '1', '2', '3', '4'])}
+          {createTable(null, ['Name', 'Physical Hazard', 'Signal Word'], ['input', 'dropdown', 'dropdown'], numRows2, physicalHazardData2, setPhysicalHazardData2, 'gases', ['N/A', 'W', 'OX', 'SA'], ['not mentioned', 'Caution', 'warning', 'Danger'])}
         </div>
       )}
 

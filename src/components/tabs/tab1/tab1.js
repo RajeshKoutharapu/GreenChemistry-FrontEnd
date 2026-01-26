@@ -180,9 +180,9 @@ useEffect(() => {
 
   try {
     console.log("JSON Data to be sent:", JSON.stringify(requestData, null, 2));
-    //await axios.post("https://greenchemistry-backendend.onrender.com/api/tab1-data", requestData);
+    await axios.post("https://greenchemistry-backendend.onrender.com/api/tab1-data", requestData);
     console.log("here")
-    await axios.post("http://localhost:8080/api/tab1-data", requestData);
+   // await axios.post("http://localhost:8080/api/tab1-data", requestData);
 
     navigate("/dashboard/IntstrumentsExperiments");
   } catch (error) {

@@ -1,4 +1,3 @@
-// context/FormContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const FormContext = createContext();
@@ -22,8 +21,10 @@ export const FormProvider = ({ children }) => {
     mainInstrumentTables: {},
   });
 
+  const [requestData, setRequestData] = useState(null); // ✅ Added requestData here
+
   return (
-    <FormContext.Provider value={{ formData, setFormData }}>
+    <FormContext.Provider value={{ formData, setFormData, requestData, setRequestData }}>
       {children}
     </FormContext.Provider>
   );

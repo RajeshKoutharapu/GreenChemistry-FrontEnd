@@ -8,16 +8,27 @@ import html2canvas from 'html2canvas';
 import { useFormContext } from '../../../allContexts/context';
 import { useNavigate } from 'react-router-dom';
 
+
+
 Chart.register(ArcElement, CategoryScale, LinearScale, BarElement);
+
 
 const Tab5 = () => {
     const location = useLocation();
-    const reportRef = useRef();
+    const reportRef = useRef();  
  const [showPrintButton, setShowPrintButton] = useState(true);
 
     const passedData = React.useMemo(() => location.state?.data || {}, [location.state?.data]);
    const { formData } = useFormContext();  // This gives you access to title
 const navigate = useNavigate();
+
+const tab2RequestData = {
+  generalInstruments: formData.generalInstrumentData || [],
+  mainInstruments: (formData.mainInstrumentData || []).map((instrument, index) => ({
+    instrument,
+    data: formData.mainInstrumentTables?.[index] || {},
+  })),
+};
 
     const [reportData, setReportData] = useState({
         numberAnalytesStudied: '',
@@ -41,14 +52,27 @@ const navigate = useNavigate();
         MiniautorisationResultForGraph: '',
         WasteGenerationForGraph: '',
         EnergyConsumptionFinalResultForGraph: '',
-        AnalysingTheMultipleAnalytesInASingleRunForGraph: ''
+        AnalysingTheMultipleAnalytesInASingleRunForGraph: '',
+        GenaralIntrumentNames:'',
+        MainInstrumentsNames:'',
+        GassesNames:'',
+        ChemicalNames:''
+
     });
 
     useEffect(() => {
-        if (Object.keys(passedData).length > 0) {
-            setReportData(passedData);
-        }
-    }, [passedData]);
+  if (Object.keys(passedData).length > 0) {
+    setReportData(prev => ({
+      ...prev,
+      GenaralIntrumentNames: '',
+      MainInstrumentsNames: '',
+      GassesNames: '',
+      ChemicalNames: '',
+      ...passedData
+    }));
+  }
+}, [passedData]);
+
 
     const getBarColor = (value) => {
         if (value <= 50) return 'red';
@@ -179,7 +203,7 @@ const barValuePlugin = {
 
     return (
         <div ref={reportRef} className="report-content">
-            <h3>Greenness Assessment</h3>
+            <h3>Method Greenness Report</h3>
             <p><strong>Title:</strong> {formData.title}</p>
 
             {/* <p>Title :reportData.</p> */}
@@ -189,15 +213,21 @@ const barValuePlugin = {
                     <tr><th>Total Energy Consumed (kWh)</th><td>{reportData.totalEnergyConsumedInKwh}</td></tr>
                     <tr><th>Total Waste Generated (mL or g)</th><td>{reportData.totalWasteGenerated}</td></tr>
                     <tr><th>Number of Solutions Prepared</th><td>{reportData.numberSolutionsPrepared}</td></tr>
-                    <tr><th>General Instruments Used</th><td>{reportData.numberOfGeneralInstrumentsUsed}</td></tr>
-                    <tr><th>Main Instruments Used</th><td>{reportData.numberOfMainInstrumentsUsed}</td></tr>
+                    <tr><th>General Instruments Used</th><td>{reportData.GenaralIntrumentNames}</td></tr>
+                    <tr><th>Main Instruments Used</th><td>{reportData.MainInstrumentsNames}</td></tr>
                     <tr><th>Instrument Position</th><td>{reportData.instrumentPosition}</td></tr>
+                    <tr><th>Gasses Used</th><td>{reportData.GassesNames}</td></tr>
+                    <tr><th>Chemicals Used</th><td>{reportData.ChemicalNames}</td></tr>
                     <tr><th>Sample Preparation</th><td>{reportData.samplePreparationInformation}</td></tr>
                     <tr><th>Derivatization</th><td>{reportData.derivatizationInformation}</td></tr>
-                    <tr><th>Waste Management for chemicals and consumbles(eg;filters, tubes)</th><td>{reportData.wasteManagement}</td></tr>
+                    <tr><th>Waste Management  for chemicals and consumbles(eg;filters, tubes)</th><td>{reportData.wasteManagement}</td></tr>
                     <tr><th>Waste Management Info</th><td>{reportData.wastemanagementInformation}</td></tr>
                     <tr><th>Greenness (%)</th><td>{reportData.resultsGreenness}</td></tr>
                     <tr><th>Final Result</th><td>{reportData.finalResult}</td></tr>
+
+                    
+ 
+
                 </tbody>
             </table>
 <div className="graphs-section">

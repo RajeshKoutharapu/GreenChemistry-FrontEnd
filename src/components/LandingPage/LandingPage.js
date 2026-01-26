@@ -19,22 +19,22 @@ const LandingPage = () => {
                         <div className="col-md-4 text-start">
                             <h5>Created By:</h5>
                             <ul>
-                                <li>Dr.Leela Prasad Kowtharapu</li>
-                                <li>Dr.Siva Krishna Muchakayala</li>
+                                <li>Dr. Leela Prasad Kowtharapu</li>
+                                <li>Dr. Siva Krishna Muchakayala</li>
                             </ul>
                         </div>
                         <div className="col-md-4 text-center">
                             <h5>Guided By:</h5>
                             <ul>
-                                <li>Dr.Vishnu Murthy Marisetti</li>
-                                <li>Dr.Naresh Kumar Katari</li>
-                                <li>Dr.Rambabu Gundla</li>
+                                <li>Dr. Vishnu Murthy Marisetti</li>
+                                <li>Dr. Naresh Kumar Katari</li>
+                                <li>Dr. Rambabu Gundla</li>
                             </ul>
                         </div>
                         <div className="col-md-4 text-end">
                             <h5>Developed By:</h5>
                             <ul>
-                                <li>Mr.Rajesh Koutharapu</li>
+                                <li>Mr. Rajesh Koutharapu</li>
                             </ul>
                         </div>
                     </div>
