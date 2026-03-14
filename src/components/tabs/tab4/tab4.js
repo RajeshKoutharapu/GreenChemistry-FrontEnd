@@ -142,6 +142,11 @@ useEffect(() => {
             alert("Please fill all required fields: Number of Analytes Studied, Instrument Posi (Insitu), Sample Preparation, and Derivatization.");
             return;
         }
+        if( ! wasteManagementOthers || 
+            !wasteManagementSamples ){
+             alert("Please fill all required fields :wasteManagementOthers  And wasteManagementSamples");
+            return;
+        }
 
         const requestData = {
             numAnalytes,
@@ -157,7 +162,7 @@ useEffect(() => {
 
         try {
          const response = await fetch('https://greenchemistry-backendend.onrender.com/api/tab4-data', {
-          //  const response = await fetch('http://localhost:8080/api/tab4-data', {
+            //const response = await fetch('http://localhost:8080/api/tab4-data', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData),
@@ -190,6 +195,7 @@ useEffect(() => {
                 <label htmlFor="instrumentPosi">Instrument Position</label>
                 <select id="instrumentPosi" value={instrumentPosi} onChange={(e) => setInstrumentPosi(e.target.value)}>
                     <option value="">Select Instrument position</option>
+                    <option value="In-Line">None</option>
                     <option value="In-Line">In-Line</option>
                     <option value="On-Line">On-Line</option>
                     <option value="At-Line">At-Line</option>

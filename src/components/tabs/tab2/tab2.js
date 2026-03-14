@@ -376,10 +376,10 @@ if (tableName === 'OtherInstrumentCustom') {
   const handleSubmit = async () => {
     try {
       // Validation for General Instruments
-      if (generalInstrumentRows === 0 && mainInstrumentsCount === 0) {
-        alert("Please enter the number of general instruments or main instruments or both.");
-        return;
-      }
+      // if (generalInstrumentRows === 0 && mainInstrumentsCount === 0) {
+      //   alert("Please enter the number of general instruments or main instruments or both.");
+      //   return;
+      // }
 
    // Validate General Instruments Data
 if (generalInstrumentRows > 0) {
@@ -445,7 +445,7 @@ if (mainInstrumentsCount > 0) {
 
       // API Request
        const response = await fetch("https://greenchemistry-backendend.onrender.com/api/tab2-data", {
-       // const response = await fetch("http://localhost:8080/api/tab2-data", {
+       //const response = await fetch("http://localhost:8080/api/tab2-data", {
          method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -507,7 +507,7 @@ if (mainInstrumentsCount > 0) {
       {generateMainInstrumentDropdowns(mainInstrumentsCount)}
 
   <div className="alert alert-info" role="alert">
-    <strong>Note:</strong> Except carrier gas flow rate, rest of the gasses flow rate and information mentioned in Chemicals/Reagents/Gases Section.
+    <strong>Note:</strong> Except carrier gases flow rate, rest of the gases flow rate and information mentioned in Chemicals/Reagents/Gases Section.
 
   </div>
 

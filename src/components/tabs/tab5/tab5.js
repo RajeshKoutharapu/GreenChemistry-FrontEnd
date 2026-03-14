@@ -192,7 +192,7 @@ const barValuePlugin = {
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 190;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.text('Greenness Assessment', 15, 10);
+      pdf.text('GITAM SOFTWARE', 15, 10);
       pdf.addImage(imgData, 'PNG', 10, 20, imgWidth, imgHeight);
       pdf.save('Greenness_Assessment_Report.pdf');
 
@@ -288,11 +288,14 @@ const barValuePlugin = {
 )}      
 
 <footer>
- <button onClick={() => navigate('/dashboard/General')}>Back</button>
 {showPrintButton && (
-  <button className="btn btn-secondary" onClick={downloadPDF}>
-    Print
-  </button>
+  <>
+    <button onClick={() => navigate('/dashboard/General')}>Back</button>
+
+    <button className="btn btn-secondary" onClick={downloadPDF}>
+      Print
+    </button>
+  </>
 )}
 </footer>
 

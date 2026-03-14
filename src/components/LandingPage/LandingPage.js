@@ -12,7 +12,7 @@ const LandingPage = () => {
             <div className="overlay">
                 <div className="content-box text-center text-white">
                     <h1 className="display-5 fw-bold mb-5">
-                        GITAM (Greenness Investigation Tool for Analytical Method) Software
+                        Greenness Investigation Tool for Analytical Method (GITAM) Software
                       
                     </h1>
                     <div className="row mb-4">
